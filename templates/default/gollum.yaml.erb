@@ -1,0 +1,10 @@
+base_path: <%= node[:omnigollum_site][:base_path] %>
+omniauth:
+    ldap:
+        host: <%= node[:omnigollum_site][:ldap][:host] %>
+        port: <%= node[:omnigollum_site][:ldap][:port] %>
+        method: <%= node[:omnigollum_site][:ldap][:method] %>
+        base: <%= node[:omnigollum_site][:ldap][:base] %>
+        uid: <%= node[:omnigollum_site][:ldap][:uid] %>
+        bind_dn: <%= node[:omnigollum_site][:ldap][:bind_dn] %>
+        password: <%= node[:omnigollum_site][:ldap][:password] %>

@@ -1,0 +1,61 @@
+# chkconfig: 345 99 01
+APP_ROOT='/home/gollum/omnigollum-site'
+CONFIG_FILE="$APP_ROOT/unicorn.rb"
+
+set -e
+
+sig () {
+  test -s "$PID" && kill -$1 `cat "$PID"`
+}
+
+oldsig () {
+  test -s "$OLD_PID" && kill -$1 `cat "$OLD_PID"`
+}
+
+cmd () {
+
+  case $1 in
+    start)
+      sig 0 && echo >&2 "Already running" && exit 0
+      echo "Starting"
+      cd $APP_ROOT
+      sudo -u gollum -H bash -l -c "bundle exec unicorn -c $CONFIG_FILE -E production -D"
+      ;;
+    stop)
+      sig QUIT && echo "Stopping" && exit 0
+      echo >&2 "Not running"
+      ;;
+    force-stop)
+      sig TERM && echo "Forcing a stop" && exit 0
+      echo >&2 "Not running"
+      ;;
+    restart|reload)
+      sig USR2 && sleep 5 && oldsig QUIT && echo "Killing old master" `cat $OLD_PID` && exit 0
+      echo >&2 "Couldn't reload, starting \$CMD instead"
+      cd $APP_ROOT
+      sudo -u gollum -H bash -l -c "bundle exec unicorn -c $CONFIG_FILE -E production -D"
+      ;;
+    upgrade)
+      sig USR2 && echo Upgraded && exit 0
+      echo >&2 "Couldn't upgrade, starting \$CMD instead"
+      cd $APP_ROOT
+      sudo -u gollum -H bash -l -c "bundle exec unicorn -c $CONFIG_FILE -E production -D"
+      ;;
+    *)
+      echo >&2 "Usage: $0 <start|stop|restart|upgrade|rotate|force-stop>"
+      exit 1
+      ;;
+    esac
+}
+
+setup () {
+  export PID=$APP_ROOT/tmp/unicorn.pid
+  export OLD_PID="$PID.oldbin"
+}
+
+start_stop () {
+    setup
+    cmd $1
+}
+
+start_stop $1
