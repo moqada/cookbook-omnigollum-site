@@ -2,6 +2,8 @@
 
 # Install nginx
 package 'nginx'
+include_recipe 'nginx::commons'
+
 service 'nginx' do
     supports :status => true, :restart => true, :reload => true
     action :enable
