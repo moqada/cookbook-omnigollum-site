@@ -9,6 +9,13 @@ service 'nginx' do
     action :enable
 end
 
+if node[:omnigollum_site][:htpasswd][:user] != ''
+    htpasswd node[:omnigollum_site][:htpasswd][:path] do
+        user node[:omnigollum_site][:htpasswd][:user]
+        password node[:omnigollum_site][:htpasswd][:password]
+    end
+end
+
 ruby_block 'set-nginx-site' do
     block do
         # Gollum library path

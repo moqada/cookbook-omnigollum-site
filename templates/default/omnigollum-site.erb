@@ -9,6 +9,17 @@ server {
         proxy_pass http://localhost:<%= node[:omnigollum_site][:unicorn][:port] %>;
         access_log /var/log/nginx/gollum.access.log;
         error_log /var/log/nginx/gollum.error.log;
+        <% if node[:omnigollum_site][:nginx][:allow_ips].size > 0 %>
+        satisfy any;
+        <% node[:omnigollum_site][:nginx][:allow_ips].each{|ip| %>
+        allow <%= ip %>;
+        <%}%>
+        deny all;
+        <% end %>
+        <% if node[:omnigollum_site][:htpasswd][:user] != "" %>
+        auth_basic "Auth";
+        auth_basic_user_file <%= node[:omnigollum_site][:htpasswd][:path] %>;
+        <% end %>
     }
 
     location ~/(javascript|css|livepreview)/ {

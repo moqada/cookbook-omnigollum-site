@@ -12,3 +12,8 @@ default[:omnigollum_site][:unicorn][:port] = 9090
 default[:omnigollum_site][:unicorn][:worker_processes] = 2
 
 default[:omnigollum_site][:nginx][:port] = 80
+default[:omnigollum_site][:nginx][:allow_ips] = []
+
+default[:omnigollum_site][:htpasswd][:path] = '/etc/nginx/htpasswd'
+default[:omnigollum_site][:htpasswd][:user] = ''
+default[:omnigollum_site][:htpasswd][:password] = ''
