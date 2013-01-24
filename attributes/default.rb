@@ -1,5 +1,11 @@
 default[:omnigollum_site][:base_path] = '/home/gollum/wiki'
 
+default[:omnigollum_site][:wiki_options][:show_all] = true
+default[:omnigollum_site][:wiki_options][:collapse_tree] = true
+default[:omnigollum_site][:wiki_options][:mathjax] = true
+default[:omnigollum_site][:wiki_options][:h1_title] = true
+default[:omnigollum_site][:wiki_options][:user_icons] = 'gravatar'
+
 default[:omnigollum_site][:ldap][:host] = '127.0.0.1'
 default[:omnigollum_site][:ldap][:port] = '389'
 default[:omnigollum_site][:ldap][:method] = 'plain'
