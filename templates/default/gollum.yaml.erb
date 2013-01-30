@@ -1,10 +1,10 @@
 base_path: <%= node[:omnigollum_site][:base_path] %>
 wiki_options:
-    show_all: <%= node[:omnigollum_site][:wiki_options][:show_all] %>
-    collapse_tree: <%= node[:omnigollum_site][:wiki_options][:collapse_tree] %>
-    mathjax: <%= node[:omnigollum_site][:wiki_options][:mathjax] %>
-    h1_title: <%= node[:omnigollum_site][:wiki_options][:h1_title] %>
-    user_icons: <%= node[:omnigollum_site][:wiki_options][:user_icons] %>
+    !ruby/sym show_all: <%= node[:omnigollum_site][:wiki_options][:show_all] %>
+    !ruby/sym collapse_tree: <%= node[:omnigollum_site][:wiki_options][:collapse_tree] %>
+    !ruby/sym mathjax: <%= node[:omnigollum_site][:wiki_options][:mathjax] %>
+    !ruby/sym h1_title: <%= node[:omnigollum_site][:wiki_options][:h1_title] %>
+    !ruby/sym user_icons: <%= node[:omnigollum_site][:wiki_options][:user_icons] %>
 omniauth:
     ldap:
         host: <%= node[:omnigollum_site][:ldap][:host] %>
