@@ -27,4 +27,8 @@ server {
         access_log /var/log/nginx/gollum.static.access.log;
         error_log /var/log/nginx/gollum.static.error.log;
     }
+
+    location ~ ^/favicon.ico$ {
+        root /home/gollum/omnigollum-site/public;
+    }
 }
